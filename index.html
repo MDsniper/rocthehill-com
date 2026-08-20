@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rocthehill | ROC THE HILL Challange – Rochester, NY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #1a3a2a;
+    --green-mid: #2d5a3d;
+    --green-bright: #4a8c5c;
+    --gold: #c9973a;
+    --gold-light: #e8b85a;
+    --cream: #f5f0e8;
+    --white: #fefefe;
+    --text-dark: #1a1a1a;
+    --text-muted: #5a5a5a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ── SKIP LINK (a11y) ── */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    background: var(--gold);
+    color: var(--green-deep);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0 0 4px 4px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+    z-index: 9999;
+    transition: top 0.2s ease;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background: var(--green-deep);
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 80%, rgba(74,140,92,0.35) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(201,151,58,0.2) 0%, transparent 50%),
+      linear-gradient(160deg, #0e2218 0%, #1a3a2a 50%, #0a1f14 100%);
+  }
+
+  .hill-svg {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    width: 100%;
+    opacity: 0.25;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    max-width: 900px;
+    animation: fadeUp 1s ease both;
+  }
+
+  .ewa-badge {
+    display: inline-block;
+    color: var(--gold);
+    letter-spacing: 0.28em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  }
+
+  .brand-logo {
+    width: clamp(120px, 22vw, 190px);
+    aspect-ratio: 1;
+    margin: 0 auto 1.25rem;
+  }
+
+  .brand-logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 12vw, 9rem);
+    line-height: 0.9;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+
+  .hero h1 span {
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: rgba(255,255,255,0.7);
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    margin-top: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .meta-pill {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--white);
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .meta-pill .icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .meta-pill .icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--green-deep);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.12em;
+    padding: 1rem 3rem;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 0 0 0 rgba(201,151,58,0.5);
+  }
+
+  .cta-btn:hover {
+    background: var(--gold-light);
+    box-shadow: 0 0 0 8px rgba(201,151,58,0.15);
+    transform: translateY(-2px);
+  }
+
+  .cta-btn:focus-visible {
+    outline: 3px solid var(--gold-light);
+    outline-offset: 3px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.4);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.25);
+    display: block;
+  }
+
+  /* ── PHOTO STRIP ── */
+  .photo-strip {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    height: 340px;
+    overflow: hidden;
+  }
+
+  .photo-strip div {
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+    position: relative;
+  }
+
+  .photo-strip div:hover { transform: scale(1.03); }
+
+  .p1 {
+    background: linear-gradient(135deg, #2d5a3d, #1a3a2a);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .p2 {
+    background: linear-gradient(135deg, #3a6b4a, #2d5a3d);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .p3 {
+    background: linear-gradient(135deg, #1a3a2a, #0e2218);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 5rem 2rem; }
+
+  .container { max-width: 1000px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--green-bright);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1;
+    color: var(--green-deep);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    line-height: 1.75;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    font-size: 1.02rem;
+  }
+
+  .perks-list {
+    list-style: none;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .perks-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    font-weight: 500;
+  }
+
+  .perks-list li::before {
+    content: '\2726';
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .about-visual {
+    background: var(--green-deep);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 3/4;
+  }
+
+  .about-visual-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, rgba(74,140,92,0.5), rgba(26,58,42,0.7));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+  }
+
+  .stat-block {
+    color: var(--white);
+  }
+
+  .stat-block .big-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-block p {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── AGENDA ── */
+  .agenda-section { background: var(--green-deep); color: var(--white); }
+
+  .agenda-section .section-label { color: var(--gold); }
+  .agenda-section .section-title { color: var(--white); }
+
+  .timeline {
+    position: relative;
+    margin-top: 3rem;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+
+  .t-item {
+    position: relative;
+    padding: 0 0 2.5rem 2rem;
+  }
+
+  .t-item::before {
+    content: '';
+    position: absolute;
+    left: -0.45rem; top: 0.35rem;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--green-deep);
+  }
+
+  .t-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+
+  .t-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin: 0.2rem 0;
+  }
+
+  .t-desc {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+  }
+
+  /* ── TEAM ── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .team-card {
+    background: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .team-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  }
+
+  .team-card-banner {
+    height: 120px;
+    background: linear-gradient(135deg, var(--green-deep), var(--green-bright));
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem 1.5rem;
+  }
+
+  .team-avatar {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 3px solid var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--green-deep);
+    position: absolute;
+    bottom: -1rem;
+    left: 1.5rem;
+  }
+
+  .team-card-body {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+
+  .team-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: var(--green-deep);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .team-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-bright);
+    margin-bottom: 0.75rem;
+  }
+
+  .team-bio {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ── REWARDS ── */
+  .rewards-section { background: #f0ebe0; }
+
+  .rewards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .reward-card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    border-top: 3px solid var(--gold);
+  }
+
+  .reward-icon {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .reward-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .reward-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--green-deep);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .reward-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ── SIGNUP FORM ── */
+  .signup-section { background: var(--green-deep); }
+  .signup-section .section-label { color: var(--gold); }
+  .signup-section .section-title { color: var(--white); }
+
+  .signup-intro {
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 3rem;
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .form-full { grid-column: 1 / -1; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .form-group label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    padding: 0.85rem 1rem;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,151,58,0.2);
+  }
+
+  .form-group input:focus-visible,
+  .form-group select:focus-visible,
+  .form-group textarea:focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 2px;
+  }
+
+  .form-group select option { background: var(--green-deep); color: var(--white); }
+
+  .form-submit {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--green-deep);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.12em;
+    border: none;
+    padding: 0.9rem 2.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-primary:focus-visible {
+    outline: 3px solid var(--gold-light);
+    outline-offset: 3px;
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .form-note {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+  }
+
+  /* ── WAIVER ── */
+  .waiver-section { background: #1a1a1a; }
+  .waiver-section .section-label { color: var(--gold); }
+  .waiver-section .section-title { color: var(--white); }
+
+  .waiver-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 2.5rem;
+    margin-top: 2rem;
+    max-height: 320px;
+    overflow-y: auto;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) transparent;
+  }
+
+  .waiver-box h3 {
+    color: var(--white);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    margin-top: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .waiver-sign {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    align-items: end;
+  }
+
+  .waiver-sign .form-group input {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--white);
+    border-radius: 4px;
+    padding: 0.85rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 48px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+  }
+
+  .waiver-sign .form-group input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,151,58,0.2);
+  }
+
+  .waiver-sign .form-group label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    cursor: pointer;
+  }
+
+  .checkbox-row input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+
+  .checkbox-row input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 2px;
+  }
+
+  /* ── MAP / LOCATION ── */
+  .location-section { background: var(--cream); }
+
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-top: 2rem;
+  }
+
+  .location-info h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--green-deep);
+    margin-bottom: 1rem;
+  }
+
+  .location-detail {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    align-items: flex-start;
+  }
+
+  .location-detail .licon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .location-detail .licon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .map-embed {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    height: 320px;
+    background: var(--green-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .map-embed iframe { width: 100%; height: 100%; border: 0; border-radius: 8px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0a1410;
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    padding: 2.5rem 2rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+  }
+
+  footer strong { color: var(--gold); font-weight: 500; }
+
+  footer a:focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 2px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-8px); }
+  }
+
+  /* ── SUCCESS ── */
+  .success-msg {
+    display: none;
+    background: rgba(74,140,92,0.2);
+    border: 1px solid var(--green-bright);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    color: var(--white);
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .success-msg.show { display: block; animation: fadeUp 0.4s ease; }
+
+  /* ── REDUCED MOTION ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 700px) {
+    .about-grid, .team-grid, .rewards-grid,
+    .form-grid, .waiver-sign, .location-grid { grid-template-columns: 1fr; }
+    .photo-strip { grid-template-columns: 1fr; height: 220px; }
+    .photo-strip div:not(.p1) { display: none; }
+    section { padding: 3.5rem 1.25rem; }
+    .hero-meta { gap: 0.75rem; }
+    .meta-pill { font-size: 0.8rem; padding: 0.5rem 1rem; }
+  }
+
+  /* ── GALLERY ── */
+  .gallery-section { padding: 3rem 2rem; background: var(--cream); }
+  .gallery-section .section-label { color: var(--green-bright); }
+  .gallery-section .section-title { color: var(--green-deep); }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 1000px; margin: 2rem auto; }
+  .gallery-item { overflow: hidden; cursor: pointer; border-radius: 6px; aspect-ratio: 4/3; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; display: block; }
+  .gallery-item:hover img { transform: scale(1.05); }
+  .gallery-credit { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); justify-content: center; align-items: center; }
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 90%; max-height: 85vh; border-radius: 4px; }
+  .lightbox-close { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; cursor: pointer; z-index: 10000; }
+  .lightbox-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; transform: translateY(-50%); padding: 0 20px; }
+  .lightbox-nav button { background: rgba(255,255,255,0.2); border: none; color: #fff; font-size: 30px; padding: 10px 20px; cursor: pointer; border-radius: 4px; }
+  .lightbox-nav button:hover { background: rgba(255,255,255,0.4); }
+  @media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+
+</style>
+</head>
+<body>
+
+<!-- Skip link for keyboard users -->
+<a href="index.html#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <svg class="hill-svg" viewBox="0 0 1440 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,220 L0,160 Q180,40 360,100 Q540,160 720,60 Q900,-20 1080,80 Q1260,160 1440,90 L1440,220 Z" fill="rgba(74,140,92,0.4)"/>
+    <path d="M0,220 L0,180 Q240,80 480,140 Q720,200 960,100 Q1200,20 1440,130 L1440,220 Z" fill="rgba(26,58,42,0.6)"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="brand-logo">
+      <img src="assets/rock-the-hill.png?v=2" alt="ROC THE HILL logo featuring the Cobbs Hill reservoir">
+    </div>
+    <div class="ewa-badge">Rocthehill &middot; Rochester, NY</div>
+    <h1>ROC THE HILL<span>Challange</span></h1>
+    <p class="hero-sub">Rise to the top. Every last Saturday of the month.</p>
+    <div class="hero-meta">
+      <div class="meta-pill">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        Cobbs Hill Park, Rochester, NY
+      </div>
+      <div class="meta-pill">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+        Every Last Saturday &middot; 10:00 AM
+      </div>
+      <div class="meta-pill">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+        Live DJ &middot; Community Vibes
+      </div>
+      <div class="meta-pill">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></span>
+        Earn Your Badge
+      </div>
+    </div>
+    <a href="index.html#signup" class="cta-btn">Claim Your Spot</a>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">Scroll</div>
+</section>
+
+<!-- ── GALLERY ── -->
+<section id="gallery" class="gallery-section">
+  <div class="container">
+    <div class="section-label">June 2025 Event</div>
+    <h2 class="section-title">Photo Gallery</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openLightbox(0)">
+        <img src="assets/gallery/RocHill0626-027-small.jpg" alt="ROC THE HILL June 2025 event photo" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(1)">
+        <img src="assets/gallery/RocHill0626-089-small.jpg" alt="ROC THE HILL June 2025 event photo" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(2)">
+        <img src="assets/gallery/RocHill0626-100-small-2.jpg" alt="ROC THE HILL June 2025 event photo" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(3)">
+        <img src="assets/gallery/RocHill0626-150-small.jpg" alt="ROC THE HILL June 2025 event photo" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(4)">
+        <img src="assets/gallery/RocHill0626-210-small.jpg" alt="ROC THE HILL June 2025 event photo" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(5)">
+        <img src="assets/gallery/RocHill0626-241-small.jpg" alt="ROC THE HILL June 2025 event photo" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(6)">
+        <img src="assets/gallery/RocHill0626-256-small.jpg" alt="ROC THE HILL June 2025 event photo" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(7)">
+        <img src="assets/gallery/RocHill0626-276-small.jpg" alt="ROC THE HILL June 2025 event photo" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(8)">
+        <img src="assets/gallery/RocHill0626-308-small.jpg" alt="ROC THE HILL June 2025 event photo" loading="lazy">
+      </div>
+    </div>
+    <p class="gallery-credit">Photos by Michael DeMaria Photography</p>
+  </div>
+</section>
+
+<!-- ── LIGHTBOX ── -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <img id="lightbox-img" src="index.html" alt="">
+  <div class="lightbox-nav">
+    <button class="lightbox-prev" onclick="event.stopPropagation();navigateLightbox(-1)">&#10094;</button>
+    <button class="lightbox-next" onclick="event.stopPropagation();navigateLightbox(1)">&#10095;</button>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+
+<main id="main-content">
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-label">What It Is</div>
+        <h2 class="section-title">Move. Connect. Rise.</h2>
+        <p>The ROC THE HILL Challange is a free monthly outdoor fitness event designed to build community, celebrate movement, and inspire a healthier Rochester. Whether you're just starting your wellness journey or maintaining a healthy lifestyle &mdash; this event is for you.</p>
+        <p>Hosted by <strong>Dr. Sunki of E.W.A. &ndash; Everything Wellness &amp; Aesthetics</strong> and <strong>Derrick Burgess of DB Healthx</strong>, each session combines a guided hill challenge with music, community energy, and a reward system that keeps you coming back.</p>
+        <ul class="perks-list">
+          <li>Guided hill walk/run &mdash; up and down Cobbs Hill</li>
+          <li>Live DJ keeping energy high the whole time</li>
+          <li>Earn a commemorative badge or token on completion</li>
+          <li>Unlock access to exclusive wellness resources</li>
+          <li>Medically supervised &mdash; safe for all fitness levels</li>
+          <li>Free to attend &mdash; just register below</li>
+        </ul>
+      </div>
+      <div class="about-visual">
+        <div style="width:100%;height:100%;background:linear-gradient(160deg,#2d5a3d,#1a3a2a);display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 300 380" width="300" height="380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1a3a2a"/>
+                <stop offset="100%" stop-color="#4a8c5c" stop-opacity="0.3"/>
+              </linearGradient>
+            </defs>
+            <rect width="300" height="380" fill="url(#sky)"/>
+            <path d="M0,380 L0,280 Q75,100 150,140 Q225,180 300,120 L300,380 Z" fill="rgba(45,90,61,0.9)"/>
+            <path d="M0,380 L0,320 Q100,220 150,240 Q200,260 300,200 L300,380 Z" fill="rgba(26,58,42,0.95)"/>
+            <circle cx="80" cy="310" r="4" fill="#c9973a" opacity="0.8"/>
+            <circle cx="110" cy="280" r="4" fill="#c9973a" opacity="0.8"/>
+            <circle cx="135" cy="250" r="4" fill="#c9973a" opacity="0.8"/>
+            <circle cx="155" cy="220" r="4" fill="#c9973a" opacity="0.8"/>
+            <circle cx="170" cy="195" r="4" fill="#c9973a" opacity="0.8"/>
+            <circle cx="172" cy="165" r="22" fill="#c9973a" opacity="0.9"/>
+            <!-- Badge icon -->
+            <circle cx="172" cy="165" r="12" fill="#1a3a2a"/>
+            <path d="M172 156 l2 5 5 0.5 -3.5 3.5 1 5 -4.5-2.5 -4.5 2.5 1-5 -3.5-3.5 5-0.5z" fill="#1a3a2a"/>
+            <polygon points="30,290 45,250 60,290" fill="rgba(74,140,92,0.5)"/>
+            <polygon points="250,240 265,200 280,240" fill="rgba(74,140,92,0.5)"/>
+            <polygon points="200,280 215,250 230,280" fill="rgba(74,140,92,0.4)"/>
+          </svg>
+        </div>
+        <div class="about-visual-overlay">
+          <div class="stat-block">
+            <div class="big-num">1st</div>
+            <p>Next Event Event &middot; June 27, 2025middot; July 25, 2026</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AGENDA ── -->
+<section class="agenda-section" id="agenda">
+  <div class="container">
+    <div class="section-label">Day Of</div>
+    <h2 class="section-title">Event Agenda</h2>
+    <p style="color:rgba(255,255,255,0.55);max-width:500px;line-height:1.7;font-size:0.95rem;">Here's your blueprint for a great Saturday morning. Arrive hydrated, wear comfortable shoes, and bring your energy.</p>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-time">10:00 AM</div>
+        <div class="t-title">Welcome &amp; Warm-Up</div>
+        <div class="t-desc">Brief welcome from Dr. Sunki and Derrick Burgess, followed by a 5-minute dynamic warm-up to prep your body &mdash; leg swings, hip circles, light cardio activation. Know before you go: safety tips, trail etiquette, and pacing guidance.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">10:10 AM</div>
+        <div class="t-title">The Challenge Begins</div>
+        <div class="t-desc">All participants take on the hill &mdash; walk, jog, or run at your own pace. Complete one full up-and-back to earn your badge. Multiple laps encouraged. DJ keeps the music pumping. EWA team and Derrick are on course for motivation and support.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">11:00 AM</div>
+        <div class="t-title">Cool Down &amp; Stretch</div>
+        <div class="t-desc">Group cool-down led by Derrick &mdash; static stretching, breathing exercises, and recovery tips tailored for weight loss and general wellness participants.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">11:15 AM</div>
+        <div class="t-title">Badge &amp; Token Ceremony</div>
+        <div class="t-desc">Complete finishers receive their monthly badge or challenge token. Unlock access to exclusive EWA wellness resources. Community photos, celebrations, and good vibes.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">11:30 AM</div>
+        <div class="t-title">Community Connect &amp; Close</div>
+        <div class="t-desc">Hang out, connect with fellow participants, and chat with the EWA team about medically supervised wellness options. Learn about upcoming events and next month's challenge. Wrap by noon.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TEAM ── -->
+<section id="team">
+  <div class="container">
+    <div class="section-label">Your Guides</div>
+    <h2 class="section-title">Meet the Team</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-card-banner">
+          <div class="team-avatar" aria-hidden="true">EWA</div>
+        </div>
+        <div class="team-card-body">
+          <div class="team-name"><a href="https://ewamedspa.com" target="_blank" style="color:inherit;text-decoration:underline">EWA Medspa</a></div>
+          <div class="team-title">Host &middot; Everything Wellness &amp; Aesthetics</div>
+          <div class="team-bio">EWA is Rochester's premier wellness and aesthetics medspa, specializing in medically supervised weight loss, body wellness, and aesthetic treatments. We believe wellness is a complete journey &mdash; and that community is the most powerful medicine.</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-banner">
+          <div class="team-avatar" aria-hidden="true">DB</div>
+        </div>
+        <div class="team-card-body">
+          <div class="team-name"><a href="https://dbhealthx.com" target="_blank" style="color:inherit;text-decoration:underline">Derrick Burgess</a></div>
+          <div class="team-title">Exercise Physiologist &amp; Personal Trainer</div>
+          <div class="team-bio">Derrick brings expertise in exercise science, movement programming, and client motivation to every session. He specializes in making fitness accessible and safe for all fitness levels &mdash; from beginners to seasoned athletes &mdash; with a warm, encouraging coaching style.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REWARDS ── -->
+<section class="rewards-section" id="rewards">
+  <div class="container">
+    <div class="section-label">What You Earn</div>
+    <h2 class="section-title">Complete &amp; Be Rewarded</h2>
+    <div class="rewards-grid">
+      <div class="reward-card">
+        <div class="reward-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+        </div>
+        <div class="reward-title">Monthly Badge</div>
+        <div class="reward-desc">Earn a unique commemorative badge or token each month you complete the hill challenge. Collect them all as proof of your consistency.</div>
+      </div>
+      <div class="reward-card">
+        <div class="reward-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <div class="reward-title">Wellness Resources</div>
+        <div class="reward-desc">Completion unlocks access to exclusive EWA wellness guides, nutrition tips, and weight loss support content curated by our medical team.</div>
+      </div>
+      <div class="reward-card">
+        <div class="reward-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
+        <div class="reward-title">Community</div>
+        <div class="reward-desc">Become part of a growing Rochester wellness community. Connect with like-minded people committed to moving, growing, and thriving together.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SIGNUP ── -->
+<section class="signup-section" id="signup">
+  <div class="container">
+    <div class="section-label">Register Now</div>
+    <h2 class="section-title">Join the Challenge</h2>
+    <p class="signup-intro">Spots fill up &mdash; secure yours for the next event: <strong style="color:var(--gold)">July 25, 2026 at 10 AM</strong>. It's free, it's fun, and it's for everyone.</p>
+
+    <form id="regForm" action="https://formspree.io/f/xqeodrav" method="POST" onsubmit="return submitForm(event, 'regForm', 'successMsg')">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="firstName">First Name *</label>
+          <input type="text" id="firstName" name="first_name" placeholder="Jane" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name *</label>
+          <input type="text" id="lastName" name="last_name" placeholder="Smith" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" placeholder="jane@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="(585) 000-0000">
+        </div>
+        <div class="form-group">
+          <label for="dob">Date of Birth *</label>
+          <input type="date" id="dob" name="date_of_birth" required>
+        </div>
+        <div class="form-group">
+          <label for="fitnessLevel">Fitness Level</label>
+          <select id="fitnessLevel" name="fitness_level">
+            <option value="">Select one...</option>
+            <option>Beginner &ndash; just getting started</option>
+            <option>Intermediate &ndash; active a few times a week</option>
+            <option>Advanced &ndash; regularly active</option>
+          </select>
+        </div>
+        <div class="form-group form-full">
+          <label for="medical">Any medical conditions or injuries we should know about?</label>
+          <textarea id="medical" name="medical_notes" rows="3" placeholder="Optional &mdash; helps us support you safely..."></textarea>
+        </div>
+        <div class="form-group form-full">
+          <label for="emergency">Emergency Contact Name &amp; Phone *</label>
+          <input type="text" id="emergency" name="emergency_contact" placeholder="Name &middot; (585) 000-0000" required>
+        </div>
+        <div class="form-group form-full">
+          <label for="referral">How did you hear about us?</label>
+          <select id="referral" name="referral_source">
+            <option value="">Select one...</option>
+            <option>Social Media (Instagram/Facebook)</option>
+            <option>EWA Client</option>
+            <option>Friend / Word of Mouth</option>
+            <option>Flyer / Poster</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <input type="hidden" name="_subject" value="New ROC THE HILL registration">
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+      <div class="form-submit">
+        <button type="submit" class="btn-primary">Reserve My Spot &rarr;</button>
+        <p class="form-note">Free to attend. By registering you agree to the health waiver below.</p>
+      </div>
+      <div class="success-msg" id="successMsg" role="status" aria-live="polite">
+        <strong>You're registered!</strong> A confirmation will be sent to your email. See you at ROC THE HILL!
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ── WAIVER ── -->
+<section class="waiver-section" id="waiver">
+  <div class="container">
+    <div class="section-label">Legal</div>
+    <h2 class="section-title" style="color:var(--white)">Health &amp; Liability Waiver</h2>
+    <p style="color:rgba(255,255,255,0.5);font-size:0.88rem;margin-bottom:0.5rem;">Please read carefully and sign below. This waiver must be completed before participation.</p>
+
+    <div class="waiver-box" role="region" aria-label="Health and Liability Waiver text">
+      <h3>1. Description of Activity</h3>
+      <p>I, the undersigned participant, wish to participate in the ROC THE HILL Challange ("the Event"), a monthly outdoor walking and fitness event held at Cobbs Hill Park, Rochester, NY, organized by Everything Wellness &amp; Aesthetics ("EWA"). The Event involves walking, jogging, or running up and down Cobbs Hill, group exercise activities, and related wellness programming.</p>
+
+      <h3>2. Voluntary Participation</h3>
+      <p>I acknowledge that my participation in this Event is entirely voluntary. I have freely chosen to participate and understand the physical demands and risks involved, including but not limited to: uneven terrain, weather conditions, physical exertion, cardiovascular strain, slips, trips, and falls.</p>
+
+      <h3>3. Medical Fitness Declaration</h3>
+      <p>I certify that I am physically fit to participate in outdoor walking and fitness activities. I have no medical condition, injury, disability, or physical limitation that would prevent my safe participation, or if I do, I have consulted with a licensed healthcare provider who has approved my participation. I agree to inform EWA staff of any relevant medical conditions prior to participation.</p>
+
+      <h3>4. Assumption of Risk</h3>
+      <p>I acknowledge and assume all risks associated with participation in the Event, whether known or unknown, foreseen or unforeseen, including those arising from the terrain, weather, equipment, actions of other participants, or my own physical condition. I understand that outdoor physical activity carries inherent risks that cannot be completely eliminated.</p>
+
+      <h3>5. Release of Liability</h3>
+      <p>In consideration of being permitted to participate in the Event, I hereby release, discharge, and hold harmless Everything Wellness &amp; Aesthetics, its owners, officers, employees, volunteers, agents, sponsors, and representatives (collectively "Released Parties") from any and all claims, liabilities, demands, actions, causes of action, costs, or expenses arising from or related to my participation in the Event, including any injury, illness, loss of personal property, or death, whether caused by the negligence of the Released Parties or otherwise.</p>
+
+      <h3>6. Indemnification</h3>
+      <p>I agree to indemnify and defend the Released Parties against any claims brought by or on behalf of myself, including those related to any injury or damages I may sustain during the Event.</p>
+
+      <h3>7. Medical Authorization</h3>
+      <p>In the event of a medical emergency during my participation, I authorize EWA staff and emergency medical personnel to provide or arrange such medical treatment as they deem necessary. I agree to bear all costs associated with any such medical treatment.</p>
+
+      <h3>8. Photography &amp; Media Release</h3>
+      <p>I grant EWA permission to photograph or record my participation in the Event and to use such images or recordings in marketing, social media, and promotional materials without compensation to me.</p>
+
+      <h3>9. Participant Conduct</h3>
+      <p>I agree to follow all safety instructions provided by EWA staff and event organizers, to respect other participants and the natural environment, and to act in a manner consistent with the safe and enjoyable operation of the Event.</p>
+
+      <h3>10. Governing Law</h3>
+      <p>This waiver shall be governed by the laws of the State of New York. If any provision of this waiver is held invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
+
+      <h3>11. Acknowledgment</h3>
+      <p>I have read this waiver in its entirety, understand its terms, and sign it voluntarily. I am 18 years of age or older, or have obtained parental/guardian consent below.</p>
+    </div>
+
+    <form id="waiverForm" action="https://formspree.io/f/xykadrkg" method="POST" onsubmit="return submitForm(event, 'waiverForm', 'waiverSuccess')">
+      <div class="waiver-sign">
+        <div class="form-group">
+          <label for="waiverName">Full Legal Name *</label>
+          <input type="text" id="waiverName" name="full_legal_name" placeholder="Jane M. Smith" required>
+        </div>
+        <div class="form-group">
+          <label for="waiverDate">Date *</label>
+          <input type="date" id="waiverDate" name="signed_date" required>
+        </div>
+        <div class="form-group">
+          <label for="waiverGuardian">Parent/Guardian (if under 18)</label>
+          <input type="text" id="waiverGuardian" name="parent_guardian" placeholder="If applicable">
+        </div>
+      </div>
+
+      <label class="checkbox-row">
+        <input type="checkbox" id="waiverCheck" name="waiver_agreed" value="yes" required>
+        <span>I have read and fully understand the Health &amp; Liability Waiver above. I voluntarily agree to its terms and release Everything Wellness &amp; Aesthetics and all associated parties from liability as described.</span>
+      </label>
+
+      <input type="hidden" name="_subject" value="New ROC THE HILL signed waiver">
+
+      <div style="margin-top:1.5rem;">
+        <button type="submit" class="btn-primary">Submit Signed Waiver</button>
+        <div class="success-msg" id="waiverSuccess" style="margin-top:1rem;" role="status" aria-live="polite">
+          <strong>Waiver received!</strong> Your signed waiver has been recorded. You're all set for the challenge!
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ── LOCATION ── -->
+<section class="location-section" id="location">
+  <div class="container">
+    <div class="section-label">Find Us</div>
+    <h2 class="section-title">Getting There</h2>
+    <div class="location-grid">
+      <div class="location-info">
+        <h3>Cobbs Hill Park</h3>
+        <div class="location-detail">
+          <span class="licon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <span>Norris Drive, Rochester, NY 14610 (park at the Cobbs Hill Reservoir lot)</span>
+        </div>
+        <div class="location-detail">
+          <span class="licon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><path d="M1 16h5a2 2 0 0 0 2-2v-3"/></svg></span>
+          <span>Free parking available in the reservoir lot off Norris Drive. Arrive by 9:45 AM for smooth check-in.</span>
+        </div>
+        <div class="location-detail">
+          <span class="licon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+          <span>Every <strong>last Saturday</strong> of the month &middot; 10:00 AM</span>
+        </div>
+        <div class="location-detail">
+          <span class="licon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span>
+          <span>Wear comfortable athletic shoes and weather-appropriate clothing. Bring water.</span>
+        </div>
+        <div class="location-detail">
+          <span class="licon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green-bright)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+          <span>Questions? Contact EWA at <a href="mailto:info@ewamedspa.com" style="color:var(--green-bright)">info@ewamedspa.com</a></span>
+        </div>
+      </div>
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2920.0!2d-77.574748!3d43.1398059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d6b56fbd58370b%3A0xb7da7277a6d57f5a!2sParking+lot+Rochester+NY+14610!5e0!3m2!1sen!2sus!4v1722300000000"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="Google Maps showing Cobbs Hill Park parking lot, Rochester, NY">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p style="margin-bottom:0.4rem;font-size:1rem;color:rgba(255,255,255,0.7)">
+    <strong>EWA &ndash; Everything Wellness &amp; Aesthetics</strong>
+  </p>
+  <p>Rochester, NY &middot; <a href="mailto:info@ewamedspa.com" style="color:var(--gold)">info@ewamedspa.com</a></p>
+  <p style="margin-top:1rem;font-size:0.75rem;">&copy; 2025 Everything Wellness &amp; Aesthetics. All rights reserved. &middot; <a href="index.html#waiver" style="color:rgba(255,255,255,0.4)">Health Waiver</a></p>
+</footer>
+
+<script>
+  // === FORMSPREE WIRING ===
+  // Each form's `action` attribute is the Formspree endpoint.
+  // Replace the placeholders below with real form IDs once DB claims them
+  // on formspree.io — see the README in the repo or the email walkthrough.
+  //   registration:  https://formspree.io/f/<reg-id>  (in #regForm action)
+  //   waiver:        https://formspree.io/f/<wvr-id>  (in #waiverForm action)
+  // Submissions stay on the page (no redirect) and the success message
+  // shows inline. Falls back to a normal form POST if the endpoint is
+  // still a placeholder so DB sees the live Formspree confirmation page
+  // in the meantime.
+
+  function submitForm(e, formId, successId) {
+    e.preventDefault();
+    var form = document.getElementById(formId);
+    var btn = form.querySelector('button[type="submit"]');
+    var successEl = document.getElementById(successId);
+    var originalText = btn.textContent;
+
+    // Detect placeholder endpoints — let the browser submit natively so
+    // DB lands on Formspree's "confirm your email" page and can claim the form.
+    if (form.action.indexOf('placeholder') !== -1) {
+      form.removeAttribute('onsubmit');
+      form.submit();
+      return false;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    var data = new FormData(form);
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(function (resp) {
+      if (resp.ok) {
+        btn.textContent = '✓ Sent!';
+        btn.style.background = '#4a8c5c';
+        btn.style.color = '#fff';
+        successEl.classList.add('show');
+        successEl.focus();
+        form.reset();
+      } else {
+        resp.json().then(function (err) {
+          alert('Sorry — there was a problem sending the form. Please email info@ewamedspa.com directly.\n\n' + (err && err.error ? err.error : ''));
+          btn.disabled = false;
+          btn.textContent = originalText;
+        }).catch(function () {
+          alert('Sorry — there was a problem sending the form. Please email info@ewamedspa.com directly.');
+          btn.disabled = false;
+          btn.textContent = originalText;
+        });
+      }
+    }).catch(function () {
+      alert('Network error. Please email info@ewamedspa.com directly.');
+      btn.disabled = false;
+      btn.textContent = originalText;
+    });
+
+    return false;
+  }
+
+  // Scroll-triggered fade-in with reduced-motion support
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (!prefersReducedMotion.matches) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.team-card, .reward-card, .t-item').forEach(function(el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  }
+
+  /* ── LIGHTBOX JS ── */
+  const galleryPhotos = [
+    "assets/gallery/RocHill0626-027-small.jpg",
+    "assets/gallery/RocHill0626-089-small.jpg",
+    "assets/gallery/RocHill0626-100-small-2.jpg",
+    "assets/gallery/RocHill0626-150-small.jpg",
+    "assets/gallery/RocHill0626-210-small.jpg",
+    "assets/gallery/RocHill0626-241-small.jpg",
+    "assets/gallery/RocHill0626-256-small.jpg",
+    "assets/gallery/RocHill0626-276-small.jpg",
+    "assets/gallery/RocHill0626-308-small.jpg",
+  ];
+  let currentPhoto = 0;
+  function openLightbox(idx) { currentPhoto = idx; document.getElementById("lightbox-img").src = galleryPhotos[idx]; document.getElementById("lightbox").classList.add("active"); }
+  function closeLightbox() { document.getElementById("lightbox").classList.remove("active"); }
+  function navigateLightbox(dir) { currentPhoto = (currentPhoto + dir + galleryPhotos.length) % galleryPhotos.length; document.getElementById("lightbox-img").src = galleryPhotos[currentPhoto]; }
+  document.addEventListener("keydown", function(e) { if (!document.getElementById("lightbox").classList.contains("active")) return; if (e.key === "Escape") closeLightbox(); if (e.key === "ArrowLeft") navigateLightbox(-1); if (e.key === "ArrowRight") navigateLightbox(1); });
+
+</script>
+</body>
+</html>
